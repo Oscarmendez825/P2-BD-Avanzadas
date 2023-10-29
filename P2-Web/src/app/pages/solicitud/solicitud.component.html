@@ -1,0 +1,74 @@
+<div class="form-container">
+    <h2>Formulario de Viaje</h2>
+    <form class="travel-form">
+      <div class="form-group">
+        <label for="fullName">Nombre Completo:</label>
+        <input type="text" id="fullName" name="fullName" [(ngModel)]="solicitud.fullName" />
+      </div>
+  
+      <div class="form-group">
+        <label for="position">Puesto:</label>
+        <select id="position" name="position" [(ngModel)]="solicitud.position">
+          <option value="administrador">Administrador</option>
+          <option value="colaborador">Colaborador</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="department">Departamento:</label>
+        <input type="text" id="department" name="department" [(ngModel)]="solicitud.department" />
+      </div>
+  
+      <div class="form-group">
+        <input type="checkbox" id="international" name="international" [(ngModel)]="solicitud.international" />
+        <label for="international">Viaje Internacional</label>
+      </div>
+      
+  
+      <div class="form-group">
+        <label for="destinationCountry">País de Destino:</label>
+        <input type="text" id="destinationCountry" name="destinationCountry" [(ngModel)]="solicitud.destinationCountry" />
+      </div>
+  
+      <div class="form-group">
+        <label for="tripPurpose">Motivo del Viaje:</label>
+        <select id="tripPurpose" name="tripPurpose" [(ngModel)]="solicitud.tripPurpose">
+          <option value="seguimiento">Seguimiento</option>
+          <option value="cierreVenta">Cierre de Venta</option>
+          <option value="capacitacion">Capacitación</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="startDate">Fecha de Inicio:</label>
+        <input type="date" id="startDate" name="startDate" [(ngModel)]="solicitud.startDate" />
+      </div>
+  
+      <div class="form-group">
+        <label for="endDate">Fecha de Finalización:</label>
+        <input type="date" id="endDate" name="endDate" [(ngModel)]="solicitud.endDate" />
+      </div>
+  
+      <div class="form-group">
+        <h3>Detalles de los Vuelos</h3>
+        <label for="airline">Nombre de la Aerolínea:</label>
+        <input type="text" id="airline" name="airline" [(ngModel)]="solicitud.airline" />
+  
+        <label for="ticketPrice">Precio de los Boletos:</label>
+        <input type="number" id="ticketPrice" name="ticketPrice" [(ngModel)]="solicitud.ticketPrice" />
+      </div>
+  
+      <div class="form-group">
+        <label for="accommodation">Nombre del Alojamiento:</label>
+        <input type="text" id="accommodation" name="accommodation" [(ngModel)]="solicitud.accommodation"/>
+      </div>
+  
+      <div class="form-group">
+        <input type="checkbox" id="requiresTransport" name="requiresTransport" [(ngModel)]="solicitud.requiresTransport" />
+        <label for="requiresTransport">Requiere Transporte:</label>
+      </div>   
+  
+      <button class="submit-button" type="submit" (click)="NewRequest()">Enviar</button>
+    </form>
+  </div>
+  

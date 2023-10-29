@@ -1,0 +1,36 @@
+<div class="table-container">
+    <p></p>
+    <table class="travel-table">
+      <thead>
+        <tr>
+          <th>Nombre Completo</th>
+          <th>Puesto</th>
+          <th>Departamento</th>
+          <th>Viaje Internacional</th>
+          <th>País de Destino</th>
+          <th>Motivo del Viaje</th>
+          <th>Fechas de Viaje</th>
+          <th>Detalles de Vuelos</th>
+          <th>Nombre del Alojamiento</th>
+          <th>Transporte</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of solicitudes">
+          <td>{{ item.fullName }}</td>
+          <td>{{ item.position }}</td>
+          <td>{{ item.department }}</td>
+          <td>{{ item.international }}</td>
+          <td>{{ item.destinationCountry}}</td>
+          <td>{{ item.tripPurpose }}</td>
+          <td>{{ item.startDate }} - {{ item.endDate }}</td>
+          <td>{{ item.airline }} - {{ item.ticketPrice }}</td>
+          <td>{{ item.accommodation }}</td>
+          <td>{{ item.requiresTransport }}</td>
+          <td>{{ item.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

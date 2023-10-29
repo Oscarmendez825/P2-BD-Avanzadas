@@ -1,0 +1,30 @@
+<!-- consulta-destino.component.html -->
+<h1>Consultar por destino específico</h1>
+<div class="container">
+    <form (ngSubmit)="consultarPorDestino()">
+      <label for="destino">Destino:</label>
+      <select id="destino" name="destino" [(ngModel)]="selectedDestino">
+        <option value="">Selecciona un destino</option>
+        <option *ngFor="let destino of destinos" [value]="destino">{{ destino }}</option>
+      </select>
+      <button type="submit" class="consultar-button">Consultar</button>
+    </form>
+  </div>
+  
+  <table class="travel-table" *ngIf="viajesPorDestino && viajesPorDestino.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Fecha de Inicio</th>
+        <th>Motivo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let viaje of viajesPorDestino">
+        <td>{{ viaje.fullName }}</td>
+        <td>{{ viaje.startDate | date:'shortDate' }}</td>
+        <td>{{ viaje.tripPurpose }}</td>
+      </tr>
+    </tbody>
+  </table>
+  

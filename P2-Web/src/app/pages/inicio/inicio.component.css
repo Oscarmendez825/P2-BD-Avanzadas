@@ -1,0 +1,55 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1c4d4;
+    color: #6f4e77;
+  }
+  
+  /* Estilos para el encabezado */
+  header {
+    background-color: #6f4e77;
+    color: #fff;
+    text-align: center;
+    padding: 50px 0;
+  }
+  
+  /* Estilos para la sección de bienvenida */
+  .welcome-section {
+    background-color: #fff;
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .welcome-section h2 {
+    color: #6f4e77;
+  }
+  
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 20px;
+  }
+  
+  /* Estilos para botones o enlaces de acciones */
+  .btn {
+    background-color: #6f4e77;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #ab8fa9;
+  }
+  
+  /* Estilos para la sección de contacto */
+  .contact-section {
+    background-color: #f7e9eb;
+    text-align: center;
+    padding: 40px;
+  }
+  

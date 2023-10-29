@@ -1,0 +1,97 @@
+/* styles.css o styles.scss (o tu archivo de estilos preferido) */
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.travel-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f7e9eb;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out; /* Animación de entrada */
+}
+
+.travel-table th,
+.travel-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #6f4e77;
+}
+
+.travel-table th {
+    background-color: #6f4e77;
+    color: #fff;
+}
+
+.travel-table tbody tr:nth-child(even) {
+    background-color: #f0c7ca;
+}
+
+.check-icon {
+    color: green; /* Color verde para el icono de check */
+    padding: 5px;
+}
+
+.x-icon {
+    color: red; /* Color rojo para el icono "x" */
+    padding: 5px;
+}
+
+/* Estilos para el contenedor que centra los elementos */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 15vh; /* Ajusta esto según tus necesidades */
+}
+
+/* Estilos para el datepicker */
+.datepicker-input {
+    border: 1px solid #6f4e77;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 10px; /* Agregar margen inferior */
+}
+
+/* Estilos para el botón "Consultar" */
+.consultar-button {
+    background-color: #6f4e77;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Agregar margen inferior */
+}
+
+/* Estilos para el encabezado h1 */
+h1 {
+    font-size: 24px; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+    text-align: center; /* Alineación del texto al centro */
+    margin-top: 20px; /* Márgenes superior e inferior para ajustar el espacio */
+}
+
+
+/* Estilos al pasar el mouse sobre el botón */
+.consultar-button:hover {
+    background-color: #874a7a;
+}
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

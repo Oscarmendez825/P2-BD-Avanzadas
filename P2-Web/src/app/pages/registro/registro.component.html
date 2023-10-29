@@ -1,0 +1,24 @@
+<div class="register-container">
+    <div class="register">
+      <h2 class="fade-in">Registro de Usuario</h2>
+      <div class="form-group fade-in">
+        <input type="text" id="fullname" placeholder="Nombre Completo" [(ngModel)]="newUser.fullName" />
+      </div>
+      <div class="form-group fade-in">
+        <input type="email" id="email" placeholder="Correo Electrónico" [(ngModel)]="newUser.email" />
+      </div>
+      <div class="form-group fade-in">
+        <input type="password" id="password" placeholder="Contraseña" [(ngModel)]="newUser.password" />
+      </div>
+      <div class="select-group fade-in">
+        <label for="position">Puesto:</label>
+        <select id="position" [(ngModel)]="newUser.position">
+          <option value="collaborator">Colaborador</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+      <button class="register-button fade-in" (click)="Register()">Registrar</button>
+    </div>
+  </div>
+  
+  
