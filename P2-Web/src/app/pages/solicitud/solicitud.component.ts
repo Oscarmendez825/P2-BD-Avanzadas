@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Solicitud } from 'src/app/models/solicitud';
+import { PostServiceService } from 'src/app/services/post-service.service';
 
 @Component({
   selector: 'app-solicitud',
@@ -21,8 +22,16 @@ export class SolicitudComponent {
     accommodation: '',
     requiresTransport: false,
   }
+  constructor(private postService:PostServiceService) { }
 
   NewRequest() {
-    console.log(this.solicitud);
+    this.postService.CrearSolicitud(this.solicitud).subscribe({
+      next: (res) => {
+        location.href = 'check/solicitud';
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 }

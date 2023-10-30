@@ -1,11 +1,11 @@
 <!-- consulta-destino.component.html -->
 <h1>Consultar por destino específico</h1>
 <div class="container">
-    <form (ngSubmit)="consultarPorDestino()">
+    <form>
       <label for="destino">Destino:</label>
-      <select id="destino" name="destino" [(ngModel)]="selectedDestino">
+      <select id="destino" name="destino" [(ngModel)]="selectedDestino" (change)="consultarPorDestino(selectedDestino)">
         <option value="">Selecciona un destino</option>
-        <option *ngFor="let destino of destinos" [value]="destino">{{ destino }}</option>
+        <option *ngFor="let destino of destinos" [value]="destino.destinationCountry">{{ destino.destinationCountry }}</option>
       </select>
       <button type="submit" class="consultar-button">Consultar</button>
     </form>

@@ -38,7 +38,7 @@ import { CookieService } from 'ngx-cookie-service';
     ValorarComponent,
     ProgramadosComponent,
     InternacionalesComponent,
-    DestinosComponent
+    DestinosComponent,
   ],
   imports: [
     BrowserModule,

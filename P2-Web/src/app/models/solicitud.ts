@@ -1,4 +1,5 @@
 export interface Solicitud {
+    id?:number,
     fullName:string,
     position:string,
     department:string,

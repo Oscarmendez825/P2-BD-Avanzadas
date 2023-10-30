@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Solicitud } from 'src/app/models/solicitud';
+import { GetServiceService } from 'src/app/services/get-service.service';
+import { PutServiceService } from 'src/app/services/put-service.service';
 
 @Component({
   selector: 'app-valorar',
@@ -7,56 +9,47 @@ import { Solicitud } from 'src/app/models/solicitud';
   styleUrls: ['./valorar.component.css']
 })
 export class ValorarComponent {
-  solicitudes:Solicitud[] = [
-    {
-      fullName: 'Juan Pérez',
-      position: 'Gerente de Proyectos',
-      department: 'Proyectos',
-      international: true,
-      destinationCountry: 'Estados Unidos',
-      tripPurpose: 'Reunión de negocios',
-      startDate: new Date('2023-11-01'),
-      endDate: new Date('2023-11-10'),
-      airline: 'American Airlines',
-      ticketPrice: 800,
-      accommodation: 'Hotel',
-      requiresTransport: true
-    },
-    {
-      fullName: 'María González',
-      position: 'Analista de Marketing',
-      department: 'Marketing',
-      international: false,
-      destinationCountry: 'N/A',
-      tripPurpose: 'Seminario en línea',
-      startDate: new Date('2023-11-05'),
-      endDate: new Date('2023-11-07'),
-      airline: '',
-      ticketPrice: 0,
-      accommodation: 'N/A',
-      requiresTransport: false
-    },
-    {
-      fullName: 'Carlos Rodríguez',
-      position: 'Ingeniero de Software',
-      department: 'Tecnología',
-      international: true,
-      destinationCountry: 'Canadá',
-      tripPurpose: 'Desarrollo de software',
-      startDate: new Date('2023-11-15'),
-      endDate: new Date('2023-11-25'),
-      airline: 'Air Canada',
-      ticketPrice: 1200,
-      accommodation: 'Apartamento',
-      requiresTransport: true
-    }
-  ];
+  solicitudes:Solicitud[] = [];
+
+  constructor(private getService: GetServiceService, private putService: PutServiceService) { }
+
+  ngOnInit(): void {
+    this.getSolicitudesPendientes();
+  }
 
   aprobarSolicitud(solicitud: any) {
-    // Lógica para aprobar la solicitud, puedes enviar una solicitud al servidor aqu
+    solicitud.status = 'Aprobada';
+    this.putService.ModificarSolicitud(solicitud.id, solicitud).subscribe({
+      next: (res) => {
+        location.href = 'check/valorar';
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
   }
 
   rechazarSolicitud(solicitud: any) {
-    // Lógica para rechazar la solicitud, puedes enviar una solicitud al servidor aquí
+    solicitud.status = 'Rechazada';
+    this.putService.ModificarSolicitud(solicitud.id, solicitud).subscribe({
+      next: (res) => {
+        location.href = 'check/valorar';
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  getSolicitudesPendientes() {
+    this.getService.getSolicitudesPendientes().subscribe({
+      next: (res) => {
+        this.solicitudes = res;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

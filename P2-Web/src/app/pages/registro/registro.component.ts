@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
+import { PostServiceService } from 'src/app/services/post-service.service';
 
 @Component({
   selector: 'app-registro',
@@ -14,8 +15,18 @@ export class RegistroComponent {
     position: ''
   }
 
+  constructor(private postService: PostServiceService){}
+
   Register(){
-    console.log(this.newUser)
+    this.postService.CrerUsuario(this.newUser).subscribe({
+      next: (res) => {
+        location.href = 'check/login';
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+    
   }
 
 }
