@@ -4,7 +4,7 @@
     <div class="form-group">
         <label for="solicitud">Solicitud:</label>
         <select [(ngModel)]="solicitudSeleccionada" (change)="checkChange(solicitudSeleccionada)">
-            <option *ngFor="let sol of solicitudes" [value]="sol.id"> {{ sol.id}} - {{sol.destinationCountry }} </option>
+            <option *ngFor="let sol of solicitudes" [value]="sol._id"> {{ sol._id}} - {{sol.destinationCountry }} </option>
         </select>
     </div>
     <form *ngIf="solicitudSeleccionada" class="travel-form">
@@ -16,23 +16,23 @@
           <option value="colaborador">Colaborador</option>
         </select>
       </div>
-  
+
       <div class="form-group">
         <label for="department">Departamento:</label>
         <input type="text" id="department" name="department" [(ngModel)]="solicitud.department" />
       </div>
-  
+
       <div class="form-group">
         <input type="checkbox" id="international" name="international" [(ngModel)]="solicitud.international" />
         <label for="international">Viaje Internacional</label>
       </div>
-      
-  
+
+
       <div class="form-group">
         <label for="destinationCountry">País de Destino:</label>
         <input type="text" id="destinationCountry" name="destinationCountry" [(ngModel)]="solicitud.destinationCountry" />
       </div>
-  
+
       <div class="form-group">
         <label for="tripPurpose">Motivo del Viaje:</label>
         <select id="tripPurpose" name="tripPurpose" [(ngModel)]="solicitud.tripPurpose">
@@ -41,39 +41,38 @@
           <option value="capacitacion">Capacitación</option>
         </select>
       </div>
-  
+
       <div class="form-group">
         <label for="startDate">Fecha de Inicio:</label>
         <input type="date" id="startDate" name="startDate" [(ngModel)]="solicitud.startDate" />
       </div>
-  
+
       <div class="form-group">
         <label for="endDate">Fecha de Finalización:</label>
         <input type="date" id="endDate" name="endDate" [(ngModel)]="solicitud.endDate" />
       </div>
-  
+
       <div class="form-group">
         <h3>Detalles de los Vuelos</h3>
         <label for="airline">Nombre de la Aerolínea:</label>
         <input type="text" id="airline" name="airline" [(ngModel)]="solicitud.airline" />
-  
+
         <label for="ticketPrice">Precio de los Boletos:</label>
         <input type="number" id="ticketPrice" name="ticketPrice" [(ngModel)]="solicitud.ticketPrice" />
       </div>
-  
+
       <div class="form-group">
         <label for="accommodation">Nombre del Alojamiento:</label>
         <input type="text" id="accommodation" name="accommodation" [(ngModel)]="solicitud.accommodation" />
       </div>
-  
+
       <div class="form-group">
         <input type="checkbox" id="requiresTransport" name="requiresTransport" [(ngModel)]="solicitud.requiresTransport" />
         <label for="requiresTransport">Requiere Transporte:</label>
-      </div>   
-  
+      </div>
+
       <button class="submit-button" (click)="submit()">Modificar</button>
       <p></p>
       <button class="submit-button" (click)="eliminarSolicitud()">Eliminar</button>
     </form>
   </div>
-  

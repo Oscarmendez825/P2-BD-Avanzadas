@@ -4,6 +4,7 @@ import { Solicitud } from 'src/app/models/solicitud';
 import { DeleteService } from 'src/app/services/delete.service';
 import { GetServiceService } from 'src/app/services/get-service.service';
 import { PutServiceService } from 'src/app/services/put-service.service';
+import {Usuario} from "../../models/usuario";
 
 @Component({
   selector: 'app-modificar',
@@ -24,9 +25,11 @@ export class ModificarComponent {
   ngOnInit(): void {
     this.getUsuarioSolicitudes();
   }
+  user = JSON.parse(this.cookieService.get('user') || '{}') as Usuario;
+
 
   solicitud: Solicitud = {
-    fullName: '',
+    fullName: this.user.fullName || '',
     position: '',
     department: '',
     international: false,
@@ -37,6 +40,7 @@ export class ModificarComponent {
     airline: '',
     ticketPrice: 0,
     accommodation: '',
+    email: this.user.email,
     requiresTransport: false,
   };
 
@@ -78,9 +82,14 @@ export class ModificarComponent {
 
   getUsuarioSolicitudes() {
     this.getService
-      .getSolicitudesUsuario(this.cookieService.get('username'))
+      .getSolicitudesUsuario(this.user.email)
       .subscribe({
         next: (res) => {
+          console.log(res);
+          res.forEach((element: any) => {
+            element._id = element._id.$oid;
+          });
+          console.log(res);
           this.solicitudes = res;
         },
         error: (err) => {

@@ -23,12 +23,12 @@ export class SolicitudComponent{
     ticketPrice: 0,
     accommodation: '',
     requiresTransport: false,
-    status: 'Pendiente'
+    status: 'Pendiente',
+    email: this.user.email,
   }
   constructor(private postService:PostServiceService, private cookieService: CookieService,) { }
 
   NewRequest() {
-    console.log(this.solicitud);
     //check if all fields are filled
     if (this.solicitud.fullName == '' || this.solicitud.position == '' || this.solicitud.department == '' || this.solicitud.destinationCountry == '' || this.solicitud.tripPurpose == '' || this.solicitud.airline == '' || this.solicitud.accommodation == '') {
       alert('Por favor llene todos los campos');

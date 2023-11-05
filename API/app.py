@@ -4,7 +4,7 @@ import re
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
 from flask_cors import CORS
-from bson import json_util
+from bson import json_util, ObjectId
 
 app = Flask(__name__)
 
@@ -105,8 +105,8 @@ def solicitar_viaje():
     ticket_price = data.get('ticketPrice')
     accommodation = data.get('accommodation')
     requires_transport = data.get('requiresTransport')
+    email = data.get('email')
     status = "Pendiente"  # Valor predeterminado: Pendiente
-
 
     solicitud = {
         'fullName': full_name,
@@ -121,13 +121,93 @@ def solicitar_viaje():
         'ticketPrice': ticket_price,
         'accommodation': accommodation,
         'requiresTransport': requires_transport,
-        'status': status
+        'status': status,
+        'email': email
     }
 
     solicitudes = db['solicitudes']
     solicitudes.insert_one(solicitud)
 
     return jsonify({'mensaje': 'Solicitud de viaje enviada con éxito'}), 201
+
+
+@app.route('/solicitud/usuario/<email>', methods=['GET'])
+def obtener_solicitudes_usuario(email):
+    # Verificar que el correo tenga un formato válido
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return jsonify({'mensaje': "El correo no es válido"}), 400
+
+    solicitudes = db['solicitudes']
+    resultado = solicitudes.find({'email': email})
+
+    # Convertir el resultado de MongoDB a JSON
+    return json.loads(json_util.dumps(resultado)), 200
+
+@app.route('/solicitud/<id>', methods=['GET'])
+def obtener_solicitud(id):
+    solicitudes = db['solicitudes']
+    try:
+        # Convertir el ID de string a ObjectId
+        object_id = ObjectId(id)
+    except:
+        return jsonify({'mensaje': "ID no válido"}), 400
+
+    resultado = solicitudes.find_one({'_id': object_id})
+
+    # Si no se encuentra ninguna solicitud con el ID proporcionado
+    if resultado is None:
+        return jsonify({'mensaje': "No se encontró la solicitud con el ID proporcionado"}), 404
+
+    # Convertir el resultado de MongoDB a JSON
+    return json.loads(json_util.dumps(resultado)), 200
+
+
+@app.route('/solicitud/<id>', methods=['PUT'])
+def actualizar_solicitud(id):
+    data = request.json
+
+    # Verificar que el ID tenga un formato válido
+    try:
+        # Convertir el ID de string a ObjectId
+        object_id = ObjectId(id)
+    except:
+        return jsonify({'mensaje': "ID no válido"}), 400
+
+    # Verificar que el ID exista
+    solicitudes = db['solicitudes']
+    resultado = solicitudes.find_one({'_id': object_id})
+    if resultado is None:
+        return jsonify({'mensaje': "No se encontró la solicitud con el ID proporcionado"}), 404
+
+    #remove _id from data
+    data.pop('_id', None)
+
+    # Actualizar la solicitud
+    solicitudes.update_one({'_id': object_id}, {'$set': data})
+
+    return jsonify({'mensaje': "Solicitud actualizada con éxito"}), 200
+
+
+@app.route('/solicitud/<id>', methods=['DELETE'])
+def eliminar_solicitud(id):
+    # Verificar que el ID tenga un formato válido
+    try:
+        # Convertir el ID de string a ObjectId
+        object_id = ObjectId(id)
+    except:
+        return jsonify({'mensaje': "ID no válido"}), 400
+
+    # Verificar que el ID exista
+    solicitudes = db['solicitudes']
+    resultado = solicitudes.find_one({'_id': object_id})
+    if resultado is None:
+        return jsonify({'mensaje': "No se encontró la solicitud con el ID proporcionado"}), 404
+
+    # Eliminar la solicitud
+    solicitudes.delete_one({'_id': object_id})
+
+    return jsonify({'mensaje': "Solicitud eliminada con éxito"}), 200
+
 
 
 # Iniciar la aplicación

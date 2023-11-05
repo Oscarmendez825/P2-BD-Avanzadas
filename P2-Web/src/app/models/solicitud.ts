@@ -1,5 +1,5 @@
 export interface Solicitud {
-    id?:number,
+    _id?:number,
     fullName:string,
     position:string,
     department:string,
@@ -12,5 +12,6 @@ export interface Solicitud {
     ticketPrice:number,
     accommodation:string,
     requiresTransport:boolean,
+    email:string,
     status?:string
 }
