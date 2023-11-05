@@ -13,6 +13,7 @@ export class HeaderComponent {
   ngOnInit() {
     // Cargar la lista de destinos al inicializar el componente
     this.isAdmin = this.cookieService.get('isAdmin') == 'true';
+    console.log(this.isAdmin);
   }
   constructor(private cookieService: CookieService){}
 

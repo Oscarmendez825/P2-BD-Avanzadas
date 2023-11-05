@@ -29,20 +29,22 @@ export class LoginComponent {
     this.postService.LogIn(this.user).subscribe({
       next: (res) => {
         console.log(res);
-        if (this.user.position == 'Admin') {
+        if (this.user.position == 'admin') {
           this.cookieService.set('isAdmin', 'true');
         }
         else {
           this.cookieService.set('isAdmin', 'false');
         }
         this.cookieService.set('username', this.user.email);
+        localStorage.setItem('user', JSON.stringify(res));
+        this.cookieService.set('user', JSON.stringify(res));
         location.href = 'check/inicio';
       },
       error: (err) => {
         this.cookieService.set('isAdmin', 'false');
       }
     });
-    
+
   }
 
   Register() {

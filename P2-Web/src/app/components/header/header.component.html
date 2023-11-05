@@ -1,4 +1,4 @@
-<div class="navbar" *ngIf="isAdmin">
+<div class="navbar" *ngIf="!isAdmin">
   <div class="logo">Travel Manager</div>
   <ul class="nav-links">
     <li><a href="check/inicio">Inicio</a></li>
@@ -12,7 +12,7 @@
     </li>
   </ul>
 </div>
-<div class="navbar" *ngIf="!isAdmin">
+<div class="navbar" *ngIf="isAdmin">
   <div class="logo">Travel Manager</div>
   <ul class="nav-links">
     <li><a href="check/inicio">Inicio</a></li>
@@ -33,4 +33,4 @@
   </ul>
 </div>
 
-  
+

@@ -1,8 +1,10 @@
+import json
 import re
 
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
 from flask_cors import CORS
+from bson import json_util
 
 app = Flask(__name__)
 
@@ -33,6 +35,7 @@ def create_document():
     result = collection.insert_one(data)
     return jsonify({'_id': str(result.inserted_id)}), 201
 
+
 # Ruta para registrar un usuario
 @app.route('/usuario', methods=['POST'])
 def registrar_usuario():
@@ -44,7 +47,7 @@ def registrar_usuario():
     position = data['position']
 
     # Validar el rol del usuario (colaborador o administrador)
-    if position not in ['collaborator', 'administrator']:
+    if position not in ['collaborator', 'admin']:
         return jsonify({'mensaje': 'Rol de usuario no válido'}), 400
 
     usuarios = db['usuarios']
@@ -65,6 +68,7 @@ def registrar_usuario():
 
     return jsonify({'mensaje': 'Usuario registrado con éxito'}), 201
 
+
 @app.route('/usuario/login', methods=['POST'])
 def validar_usuario():
     data = request.get_json()
@@ -77,11 +81,54 @@ def validar_usuario():
     usuario_existente = usuarios.find_one({'email': email})
     if usuario_existente:
         if usuario_existente['password'] == password:
-            return jsonify({'mensaje': 'Usuario válido'}), 200
+            # devolver el usuario
+            return json.loads(json_util.dumps(usuario_existente)), 200
         else:
             return jsonify({'mensaje': 'Contraseña incorrecta'}), 400
     else:
         return jsonify({'mensaje': 'Correo no registrado'}), 400
+
+
+@app.route('/solicitud', methods=['POST'])
+def solicitar_viaje():
+    data = request.json
+
+    full_name = data.get('fullName')
+    position = data.get('position')
+    department = data.get('department')
+    international = data.get('international')
+    destination_country = data.get('destinationCountry')
+    trip_purpose = data.get('tripPurpose')
+    start_date = data.get('startDate')
+    end_date = data.get('endDate')
+    airline = data.get('airline')
+    ticket_price = data.get('ticketPrice')
+    accommodation = data.get('accommodation')
+    requires_transport = data.get('requiresTransport')
+    status = "Pendiente"  # Valor predeterminado: Pendiente
+
+
+    solicitud = {
+        'fullName': full_name,
+        'position': position,
+        'department': department,
+        'international': international,
+        'destinationCountry': destination_country,
+        'tripPurpose': trip_purpose,
+        'startDate': start_date,
+        'endDate': end_date,
+        'airline': airline,
+        'ticketPrice': ticket_price,
+        'accommodation': accommodation,
+        'requiresTransport': requires_transport,
+        'status': status
+    }
+
+    solicitudes = db['solicitudes']
+    solicitudes.insert_one(solicitud)
+
+    return jsonify({'mensaje': 'Solicitud de viaje enviada con éxito'}), 201
+
 
 # Iniciar la aplicación
 if __name__ == '__main__':

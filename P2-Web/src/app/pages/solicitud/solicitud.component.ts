@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import { Solicitud } from 'src/app/models/solicitud';
 import { PostServiceService } from 'src/app/services/post-service.service';
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-solicitud',
   templateUrl: './solicitud.component.html',
   styleUrls: ['./solicitud.component.css']
 })
-export class SolicitudComponent {
+export class SolicitudComponent{
+  user = JSON.parse(this.cookieService.get('user') || '{}');
   solicitud: Solicitud = {
-    fullName: '',
-    position: '',
+    fullName: this.user.fullName,
+    position: this.user.position,
     department: '',
     international: false,
     destinationCountry: '',
@@ -21,10 +23,17 @@ export class SolicitudComponent {
     ticketPrice: 0,
     accommodation: '',
     requiresTransport: false,
+    status: 'Pendiente'
   }
-  constructor(private postService:PostServiceService) { }
+  constructor(private postService:PostServiceService, private cookieService: CookieService,) { }
 
   NewRequest() {
+    console.log(this.solicitud);
+    //check if all fields are filled
+    if (this.solicitud.fullName == '' || this.solicitud.position == '' || this.solicitud.department == '' || this.solicitud.destinationCountry == '' || this.solicitud.tripPurpose == '' || this.solicitud.airline == '' || this.solicitud.accommodation == '') {
+      alert('Por favor llene todos los campos');
+      return;
+    }
     this.postService.CrearSolicitud(this.solicitud).subscribe({
       next: (res) => {
         location.href = 'check/solicitud';
