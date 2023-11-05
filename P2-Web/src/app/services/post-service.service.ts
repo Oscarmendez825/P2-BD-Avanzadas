@@ -9,7 +9,7 @@ import { Solicitud } from '../models/solicitud';
 })
 export class PostServiceService {
 
-  private baseUrl = '';
+  private baseUrl = 'localhost:5000';
 
   constructor(private http: HttpClient) { }
 
