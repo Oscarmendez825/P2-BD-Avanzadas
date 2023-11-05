@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
 from flask_cors import CORS
@@ -7,19 +9,10 @@ app = Flask(__name__)
 # Habilita CORS para todas las rutas de la aplicación
 CORS(app)
 
-# Opcional: Configura opciones CORS personalizadas
-cors = CORS(app, resources={
-    r"/api/*": {
-        "origins": "https://dominio-permitido.com",
-        "methods": ["GET", "POST", "PUT", "DELETE"],
-        "allow_headers": ["Authorization"],
-    }
-})
-
 # Configurar la conexión a MongoDB
 client = MongoClient("mongodb://localhost:27017/")
 db = client["proyectoBases"]
-collection = db["users"]
+collection = db["usuarios"]
 
 
 # Ruta para obtener todos los documentos
@@ -44,13 +37,14 @@ def create_document():
 @app.route('/usuario', methods=['POST'])
 def registrar_usuario():
     data = request.get_json()
+    print(data)
     fullName = data['fullName']
     email = data['email']
     password = data['password']
     position = data['position']
 
     # Validar el rol del usuario (colaborador o administrador)
-    if role not in ['colaborador', 'administrador']:
+    if position not in ['collaborator', 'administrator']:
         return jsonify({'mensaje': 'Rol de usuario no válido'}), 400
 
     usuarios = db['usuarios']
@@ -71,13 +65,23 @@ def registrar_usuario():
 
     return jsonify({'mensaje': 'Usuario registrado con éxito'}), 201
 
-@app.route('/validar', methods=['GET'])
-def validar_usuario(email, password):
-    # Verificar que el correo tenga un formato válido
-    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        return False, "El correo no es válido"
+@app.route('/usuario/login', methods=['POST'])
+def validar_usuario():
+    data = request.get_json()
+    email = data['email']
+    password = data['password']
 
-    return True, "Usuario válido"
+    usuarios = db['usuarios']
+
+    # Verificar si el correo ya está registrado
+    usuario_existente = usuarios.find_one({'email': email})
+    if usuario_existente:
+        if usuario_existente['password'] == password:
+            return jsonify({'mensaje': 'Usuario válido'}), 200
+        else:
+            return jsonify({'mensaje': 'Contraseña incorrecta'}), 400
+    else:
+        return jsonify({'mensaje': 'Correo no registrado'}), 400
 
 # Iniciar la aplicación
 if __name__ == '__main__':

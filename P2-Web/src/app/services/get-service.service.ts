@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class GetServiceService {
 
-  baseUrl = 'localhost:5000';
+  baseUrl = 'http://localhost:5000';
   constructor(private http: HttpClient) { }
 
   //Obtener solicitudes de un usuario por email

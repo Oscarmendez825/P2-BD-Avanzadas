@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class DeleteService {
 
-  baseUrl = '';
+  baseUrl = 'http://localhost:5000';
   constructor(private http: HttpClient) { }
 
   EliminarSolicitud(id: number):Observable<any> {
