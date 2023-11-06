@@ -1,5 +1,6 @@
 import json
 import re
+from datetime import datetime
 
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
@@ -207,6 +208,89 @@ def eliminar_solicitud(id):
     solicitudes.delete_one({'_id': object_id})
 
     return jsonify({'mensaje': "Solicitud eliminada con éxito"}), 200
+
+
+@app.route('/solicitud/pendientes', methods=['GET'])
+def obtener_solicitudes_pendientes():
+    solicitudes = db['solicitudes']
+    resultado = solicitudes.find({'status': 'Pendiente'})
+
+    # Convertir el resultado de MongoDB a JSON
+    return json.loads(json_util.dumps(resultado)), 200
+
+
+@app.route('/solicitud/internacionales/<quarter>/<year>', methods=['GET'])
+def obtener_solicitudes_internacionales(quarter, year):
+    solicitudes = db['solicitudes']
+    try:
+        quarter = int(quarter)
+        year = int(year)
+    except:
+        return jsonify({'mensaje': "Trimestre o año no válido"}), 400
+    # Definir el rango de fechas para el trimestre
+    if quarter == 1:
+        start_date = datetime(year, 1, 1)
+        end_date = datetime(year, 3, 31)
+    elif quarter == 2:
+        start_date = datetime(year, 4, 1)
+        end_date = datetime(year, 6, 30)
+    elif quarter == 3:
+        start_date = datetime(year, 7, 1)
+        end_date = datetime(year, 9, 30)
+    elif quarter == 4:
+        start_date = datetime(year, 10, 1)
+        end_date = datetime(year, 12, 31)
+    else:
+        return jsonify({'mensaje': "Trimestre no válido"}), 400
+
+    # Filtrar las solicitudes que son internacionales y que caen dentro del rango de fechas
+    query = {
+        'international': True,
+        'startDate': {'$gte': start_date.strftime('%Y-%m-%d')},
+        'endDate': {'$lte': end_date.strftime('%Y-%m-%d')}
+    }
+    resultado = solicitudes.find(query)
+
+    # Convertir el resultado de MongoDB a JSON
+    return json.loads(json_util.dumps(resultado)), 200
+
+
+@app.route('/solicitud/destino', methods=['GET'])
+def obtener_destinos():
+    solicitudes = db['solicitudes']
+    resultado = solicitudes.find({}, {'destinationCountry': 1})
+
+    # Convertir el resultado de MongoDB a JSON
+    return json.loads(json_util.dumps(resultado)), 200
+
+
+@app.route('/solicitud/destino/<destino>', methods=['GET'])
+def obtener_solicitudes_destino(destino):
+    solicitudes = db['solicitudes']
+    resultado = solicitudes.find({'destinationCountry': destino})
+
+    # Convertir el resultado de MongoDB a JSON
+    return json.loads(json_util.dumps(resultado)), 200
+
+
+@app.route('/solicitud/mes/<date>', methods=['GET'])
+def obtener_solicitudes_mes(date):
+    # http://localhost:5000/solicitud/mes/{2023-01}
+    solicitudes = db['solicitudes']
+    try:
+        date = datetime.strptime(date, '%Y-%m')
+    except:
+        return jsonify({'mensaje': "Fecha no válida"}), 400
+
+    # Filtrar las solicitudes que caen dentro del mes
+    query = {
+        'startDate': {'$gte': date.strftime('%Y-%m-01')},
+        'endDate': {'$lte': date.strftime('%Y-%m-31')}
+    }
+    resultado = solicitudes.find(query)
+
+    # Convertir el resultado de MongoDB a JSON
+    return json.loads(json_util.dumps(resultado)), 200
 
 
 

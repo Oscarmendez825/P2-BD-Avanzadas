@@ -29,10 +29,12 @@ export class LoginComponent {
     this.postService.LogIn(this.user).subscribe({
       next: (res) => {
         console.log(res);
-        if (this.user.position == 'admin') {
+        if (res.position.includes("admin")) {
+          console.log('admin');
           this.cookieService.set('isAdmin', 'true');
         }
         else {
+          console.log('no admin');
           this.cookieService.set('isAdmin', 'false');
         }
         this.cookieService.set('username', this.user.email);

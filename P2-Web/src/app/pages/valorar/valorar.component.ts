@@ -19,7 +19,7 @@ export class ValorarComponent {
 
   aprobarSolicitud(solicitud: any) {
     solicitud.status = 'Aprobada';
-    this.putService.ModificarSolicitud(solicitud.id, solicitud).subscribe({
+    this.putService.ModificarSolicitud(solicitud._id, solicitud).subscribe({
       next: (res) => {
         location.href = 'check/valorar';
       },
@@ -32,7 +32,7 @@ export class ValorarComponent {
 
   rechazarSolicitud(solicitud: any) {
     solicitud.status = 'Rechazada';
-    this.putService.ModificarSolicitud(solicitud.id, solicitud).subscribe({
+    this.putService.ModificarSolicitud(solicitud._id, solicitud).subscribe({
       next: (res) => {
         location.href = 'check/valorar';
       },
@@ -45,6 +45,10 @@ export class ValorarComponent {
   getSolicitudesPendientes() {
     this.getService.getSolicitudesPendientes().subscribe({
       next: (res) => {
+        res.forEach((element: any) => {
+          element._id = element._id.$oid;
+        });
+        console.log(res);
         this.solicitudes = res;
       },
       error: (err) => {
