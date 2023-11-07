@@ -1,0 +1,23 @@
+<h1>Consultar viajes programados</h1>
+
+<div class="container">
+  <p></p>
+  <input type="month" [(ngModel)]="selectedDate" class="datepicker-input">
+  <button (click)="consultarViajes()" class="consultar-button">Consultar</button>
+</div>
+
+
+<table class="travel-table" *ngIf="viajesProgramados.length > 0">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Departamento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let viaje of viajesProgramados">
+      <td>{{ viaje.fullName }}</td>
+      <td>{{ viaje.department }}</td>
+    </tr>
+  </tbody>
+</table>

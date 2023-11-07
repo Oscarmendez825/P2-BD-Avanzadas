@@ -1,0 +1,134 @@
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7e9eb;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: all 0.5s; /* Animación de transición para el contenedor */
+  }
+  
+  h2 {
+    color: #6f4e77;
+    margin-bottom: 20px;
+  }
+  
+  .travel-form {
+    text-align: left;
+    padding: 10px;
+    animation: fadeIn 1s ease-in-out; /* Animación de desvanecimiento */
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 0.5s; /* Retraso para que aparezcan con secuencia */
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    color: #6f4e77;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #6f4e77;
+    background-color: transparent;
+    outline: none;
+    color: #6f4e77;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 1s; /* Retraso para que aparezcan con secuencia */
+  }
+  
+  .form-group input::placeholder,
+  .form-group select::placeholder {
+    color: #a794a5;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #ab8fa9;
+  }
+  
+  .submit-button {
+    background-color: #6f4e77;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 1.5s; /* Retraso para que aparezca al final */
+  }
+  
+  .submit-button:hover {
+    background-color: #ab8fa9;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+/* Estilos para checkboxes */
+.form-group input[type="checkbox"] {
+    display: none; /* Oculta el checkbox nativo */
+  }
+  
+  .form-group input[type="checkbox"] + label::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #6f4e77;
+    border-radius: 3px;
+    background-color: white;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  
+  .form-group input[type="checkbox"]:checked + label::before {
+    background-color: #6f4e77;
+  }
+  
+  /* Estilos para radio buttons */
+  .form-group input[type="radio"] {
+    display: none; /* Oculta el radio button nativo */
+  }
+  
+  .form-group input[type="radio"] + label::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #6f4e77;
+    border-radius: 50%; /* Hace que sea un círculo */
+    background-color: white;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  
+  .form-group input[type="radio"]:checked + label::before {
+    background-color: #6f4e77;
+  }
+    

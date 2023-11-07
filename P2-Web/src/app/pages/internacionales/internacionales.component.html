@@ -1,0 +1,34 @@
+<h1>Consultar viajes internacionales</h1>
+<div class="table-container">
+  <form (ngSubmit)="consultarViajes()">
+    <label for="quarter">Trimestre:</label>
+    <select id="quarter" name="quarter" [(ngModel)]="selectedQuarter">
+      <option value="1">1er Trimestre</option>
+      <option value="2">2do Trimestre</option>
+      <option value="3">3er Trimestre</option>
+      <option value="4">4to Trimestre</option>
+    </select>
+
+    <label for="year">Año:</label>
+    <input type="number" id="year" name="year" [(ngModel)]="selectedYear" min="1900" max="2100"> <!-- Establece el rango de años según tus necesidades -->
+
+    <button (click)="consultarViajes()" class="consultar-button">Consultar</button>
+  </form>
+</div>
+
+  
+  <table class="travel-table" *ngIf="viajesInternacionales.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>País de Destino</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let viaje of viajesInternacionales">
+        <td>{{ viaje.fullName }}</td>
+        <td>{{ viaje.destinationCountry }}</td>
+      </tr>
+    </tbody>
+  </table>
+  

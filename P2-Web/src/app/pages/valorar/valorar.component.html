@@ -1,0 +1,46 @@
+<!-- solicitudes-pendientes.component.html -->
+
+<div class="table-container">
+  <p></p>
+  <table class="travel-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Cargo</th>
+        <th>Departamento</th>
+        <th>Internacional</th>
+        <th>País de destino</th>
+        <th>Propósito del viaje</th>
+        <th>Fecha de inicio</th>
+        <th>Fecha de fin</th>
+        <th>Aerolínea</th>
+        <th>Precio del boleto</th>
+        <th>Condiciones de alojamiento</th>
+        <th>Requiere transporte</th>
+        <th>Aprobar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let solicitud of solicitudes">
+        <td>{{ solicitud.fullName }}</td>
+        <td>{{ solicitud.position }}</td>
+        <td>{{ solicitud.department }}</td>
+        <td>{{ solicitud.international ? 'Sí' : 'No' }}</td>
+        <td>{{ solicitud.destinationCountry }}</td>
+        <td>{{ solicitud.tripPurpose }}</td>
+        <td>{{ solicitud.startDate | date }}</td>
+        <td>{{ solicitud.endDate | date }}</td>
+        <td>{{ solicitud.airline }}</td>
+        <td>{{ solicitud.ticketPrice | currency }}</td>
+        <td>{{ solicitud.accommodation }}</td>
+        <td>{{ solicitud.requiresTransport ? 'Sí' : 'No' }}</td>
+        <td>
+          <i class="fas fa-check check-icon" (click)="aprobarSolicitud(solicitud)"></i>
+          <i class="fas fa-times x-icon" (click)="rechazarSolicitud(solicitud)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  

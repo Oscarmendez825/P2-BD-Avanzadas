@@ -1,0 +1,36 @@
+<div class="navbar" *ngIf="!isAdmin">
+  <div class="logo">Travel Manager</div>
+  <ul class="nav-links">
+    <li><a href="check/inicio">Inicio</a></li>
+    <li class="dropdown">
+      <a href="#">Solicitudes</a>
+      <ul class="dropdown-menu">
+        <li><a href="check/solicitud">Crear</a></li>
+        <li><a href="check/modificar">Modificar</a></li>
+        <li><a href="check/historial">Historial</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div class="navbar" *ngIf="isAdmin">
+  <div class="logo">Travel Manager</div>
+  <ul class="nav-links">
+    <li><a href="check/inicio">Inicio</a></li>
+    <li class="dropdown">
+      <a href="#">Consultas</a>
+      <ul class="dropdown-menu">
+        <li><a href="check/internacionales">Internacionales</a></li>
+        <li><a href="check/destinos">Destinos</a></li>
+        <li><a href="check/programados">Programados</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#">Solicitudes</a>
+      <ul class="dropdown-menu">
+        <li><a href="check/valorar">Valorar</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+

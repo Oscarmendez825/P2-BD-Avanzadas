@@ -1,0 +1,17 @@
+<div class="login-container">
+  <div class="login">
+    <h2 class="fade-in">Iniciar Sesión</h2>
+    <div class="form-group fade-in">
+      <input type="text" id="username" placeholder="Email" [(ngModel)]="user.email" />
+    </div>
+    <div class="form-group fade-in">
+      <input type="password" id="password" placeholder="Contraseña" [(ngModel)]="user.password" />
+    </div>
+    <button class="login-button fade-in" (click)="LogIn()">Ingresar</button>
+    <p></p>
+    <label>¿No estás registrado? Registrate ahora</label>
+    <p></p>
+    <button class="login-button fade-in" (click)="Register()">Registrarme</button>
+  </div>
+</div>
+
