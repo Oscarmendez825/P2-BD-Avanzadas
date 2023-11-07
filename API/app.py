@@ -13,7 +13,8 @@ app = Flask(__name__)
 CORS(app)
 
 # Configurar la conexión a MongoDB
-client = MongoClient("mongodb://localhost:30001/?directConnection=true&serverSelectionTimeoutMS=2000")
+#client = MongoClient("mongodb://localhost:30003/?directConnection=true&serverSelectionTimeoutMS=2000")
+client = MongoClient("mongodb://localhost:27117,localhost:27217,localhost:27317/?replicaSet=my-mongo-set")
 db = client["proyectoBases"]
 collection = db["usuarios"]
 
@@ -286,14 +287,12 @@ def obtener_solicitudes_mes(date):
     # Filtrar las solicitudes que caen dentro del mes
     query = {
         'startDate': {'$gte': date.strftime('%Y-%m-01')},
-        'endDate': {'$lte': date.strftime('%Y-%m-31')},
         'status': 'Aprobada'
     }
     resultado = solicitudes.find(query)
 
     # Convertir el resultado de MongoDB a JSON
     return json.loads(json_util.dumps(resultado)), 200
-
 
 
 # Iniciar la aplicación
